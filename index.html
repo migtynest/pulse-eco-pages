@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f8fd">
+  <meta name="description" content="Pulse Экоолимпиада — интерактивная олимпиада по экологии с проверкой ответов и статистикой.">
+  <title>Pulse — Экоолимпиада</title>
+  <link rel="stylesheet" href="style.css?v=5">
+  <script defer src="app.js?v=5"></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <div class="header-inner">
+        <button class="brand" type="button" data-page="home" aria-label="На главную">
+          <span class="brand-symbol">P<span class="brand-dot">.</span></span>
+          <span class="brand-text"><strong>pulse</strong><small>экоолимпиада</small></span>
+        </button>
+        <nav class="nav" aria-label="Главное меню">
+          <button type="button" data-page="home" class="nav-link active">Олимпиада</button>
+        </nav>
+      </div>
+    </header>
+    <main id="app" class="main" aria-live="polite"><div class="loading"><span class="spinner"></span> Загружаем олимпиаду…</div></main>
+    <footer class="footer"><span><b>pulse.</b> Учиться менять мир — интересно.</span><span>Создано для экологической олимпиады · 2026</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
