@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -5,43 +6,274 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Pulse — панель организатора</title>
 <style>
-:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#14264b;background:#f5f7ff}*{box-sizing:border-box}body{margin:0}header{background:#fff;border-bottom:1px solid #dce3f4;padding:18px max(20px,calc((100vw - 1100px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:23px;margin:0}main{max-width:1100px;margin:38px auto;padding:0 18px}.panel{background:white;border:1px solid #dce3f4;border-radius:18px;padding:25px;margin-bottom:22px;box-shadow:0 3px 18px #23365d0b}.login{max-width:440px;margin:65px auto}h2{margin:0 0 20px;font-size:22px}label{display:block;font-weight:650;margin:16px 0 7px}input{width:100%;padding:13px;border:1px solid #bdc9e2;border-radius:10px;font-size:16px}button{cursor:pointer;border:0;border-radius:10px;background:#5369ec;color:white;padding:12px 17px;font-size:15px;font-weight:700}button:hover{background:#4156cf}button:disabled{opacity:.55;cursor:wait}.secondary{background:#e9edff;color:#273b92}.secondary:hover{background:#dce4ff}.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}.toolbar input{max-width:300px}.muted{color:#647497}.error{color:#aa223c;white-space:pre-wrap}.status{min-height:24px;margin:13px 0}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #e5eaf4}th{background:#f4f6fd;white-space:nowrap}tr:hover td{background:#fafbff}.scroll{overflow-x:auto}.stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:18px}.stats strong{font-size:24px;display:block}.stats span{font-size:13px;color:#647497}.hidden{display:none!important}.right{margin-left:auto}.notice{font-size:13px;color:#647497;line-height:1.5}.empty{text-align:center;padding:25px;color:#647497}
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#14264b;background:#f5f7ff}
+*{box-sizing:border-box}
+body{margin:0}
+header{background:#fff;border-bottom:1px solid #dce3f4;padding:18px max(20px,calc((100vw - 1100px)/2));display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{font-size:23px;margin:0}
+main{max-width:1100px;margin:38px auto;padding:0 18px}
+.panel{background:white;border:1px solid #dce3f4;border-radius:18px;padding:25px;margin-bottom:22px;box-shadow:0 3px 18px #23365d0b}
+.login{max-width:440px;margin:65px auto}
+h2{margin:0 0 20px;font-size:22px}
+label{display:block;font-weight:650;margin:16px 0 7px}
+input{width:100%;padding:13px;border:1px solid #bdc9e2;border-radius:10px;font-size:16px}
+button{cursor:pointer;border:0;border-radius:10px;background:#5369ec;color:white;padding:12px 17px;font-size:15px;font-weight:700}
+button:hover{background:#4156cf}
+button:disabled{opacity:.55;cursor:wait}
+.secondary{background:#e9edff;color:#273b92}
+.secondary:hover{background:#dce4ff}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.toolbar input{max-width:300px}
+.muted{color:#647497}
+.error{color:#aa223c;white-space:pre-wrap}
+.status{min-height:24px;margin:13px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid #e5eaf4}
+th{background:#f4f6fd;white-space:nowrap}
+tr:hover td{background:#fafbff}
+.scroll{overflow-x:auto}
+.stats{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+.stats strong{font-size:24px;display:block}
+.stats span{font-size:13px;color:#647497}
+.hidden{display:none!important}
+.right{margin-left:auto}
+.notice{font-size:13px;color:#647497;line-height:1.5}
+.empty{text-align:center;padding:25px;color:#647497}
 </style>
 </head>
 <body>
-<header><h1>Pulse <span class="muted">· Панель организатора</span></h1><button id="logout" class="secondary hidden">Выйти</button></header>
+<header>
+<h1>Pulse <span class="muted">· Панель организатора</span></h1>
+<button id="logout" class="secondary hidden">Выйти</button>
+</header>
 <main>
 <section id="loginPanel" class="panel login">
 <h2>Вход организатора</h2>
-<form id="loginForm"><label for="email">Электронная почта</label><input id="email" type="email" autocomplete="username" required><label for="password">Пароль</label><input id="password" type="password" autocomplete="current-password" required><p><button id="loginButton" type="submit">Войти</button></p></form>
-<p id="loginStatus" class="status" role="status"></p><p class="notice">Доступ только для организатора. Пароль не сохраняется на этой странице.</p>
+<form id="loginForm">
+<label for="email">Электронная почта</label>
+<input id="email" type="email" autocomplete="username" required>
+<label for="password">Пароль</label>
+<input id="password" type="password" autocomplete="current-password" required>
+<p><button id="loginButton" type="submit">Войти</button></p>
+</form>
+<p id="loginStatus" class="status" role="status"></p>
+<p class="notice">Доступ только для организатора. Пароль не сохраняется на этой странице.</p>
 </section>
+
 <section id="dashboard" class="hidden">
-<div class="panel"><div class="toolbar"><h2 style="margin:0">Рейтинг участников</h2><button id="reload" class="secondary right">Обновить</button><button id="exportRanking">Экспорт рейтинга (CSV)</button></div><p id="dashboardStatus" class="status" role="status"></p><div class="stats"><div><strong id="participantsCount">—</strong><span>участников</span></div><div><strong id="attemptsCount">—</strong><span>попыток</span></div></div><div class="toolbar"><input id="search" placeholder="Поиск по имени или школе" aria-label="Поиск по участникам"><label style="margin:0;font-weight:400"><input type="checkbox" id="hideTests" style="width:auto"> Скрыть тестовые записи</label></div><div class="scroll"><table><thead><tr><th>Место</th><th>Фамилия</th><th>Имя</th><th>Школа</th><th>Класс</th><th>Попыток</th><th>Лучший балл</th></tr></thead><tbody id="rankingRows"></tbody></table></div><p class="notice">При равенстве лучших баллов участники занимают одинаковое место. Тестовые записи скрываются только из отображения и экспорта, но остаются в базе.</p></div>
-<div class="panel"><div class="toolbar"><h2 style="margin:0">История попыток</h2><button id="exportAttempts" class="right">Экспорт попыток (CSV)</button></div><div class="scroll"><table><thead><tr><th>Дата</th><th>Фамилия</th><th>Имя</th><th>Школа</th><th>Класс</th><th>№ попытки</th><th>Баллы</th></tr></thead><tbody id="attemptRows"></tbody></table></div></div>
+<div class="panel">
+<div class="toolbar">
+<h2 style="margin:0">Рейтинг участников</h2>
+<button id="reload" class="secondary right">Обновить</button>
+<button id="exportRanking">Экспорт рейтинга (CSV)</button>
+</div>
+<p id="dashboardStatus" class="status" role="status"></p>
+<div class="stats">
+<div><strong id="participantsCount">—</strong><span>участников</span></div>
+<div><strong id="attemptsCount">—</strong><span>попыток</span></div>
+</div>
+<div class="toolbar">
+<input id="search" placeholder="Поиск по имени или школе" aria-label="Поиск по участникам">
+<label style="margin:0;font-weight:400">
+<input type="checkbox" id="hideTests" style="width:auto"> Скрыть тестовые записи
+</label>
+</div>
+<div class="scroll">
+<table>
+<thead><tr><th>Место</th><th>Фамилия</th><th>Имя</th><th>Школа</th><th>Класс</th><th>Попыток</th><th>Лучший балл</th></tr></thead>
+<tbody id="rankingRows"></tbody>
+</table>
+</div>
+<p class="notice">При равенстве лучших баллов участники занимают одинаковое место. Тестовые записи скрываются только из отображения и экспорта, но остаются в базе.</p>
+</div>
+
+<div class="panel">
+<div class="toolbar">
+<h2 style="margin:0">История попыток</h2>
+<button id="exportAttempts" class="right">Экспорт попыток (CSV)</button>
+</div>
+<div class="scroll">
+<table>
+<thead><tr><th>Дата</th><th>Фамилия</th><th>Имя</th><th>Школа</th><th>Класс</th><th>№ попытки</th><th>Баллы</th></tr></thead>
+<tbody id="attemptRows"></tbody>
+</table>
+</div>
+</div>
 </section>
 </main>
+
 <script>
 'use strict';
+
 const BASE='https://yxictjjcxppbkptgmknh.supabase.co';
 const KEY='sb_publishable_yKpmzm_SuWsH3wunJNmSAQ_4oTmkBqW';
 const $=id=>document.getElementById(id);
-let accessToken=null,ranking=[],attempts=[];
+
+let accessToken=null,ranking=[],attempts[];
+
 const str=x=>String(x??'');
-function status(id,message,isError=false){const el=$(id);el.textContent=message;el.classList.toggle('error',isError)}
-function cell(tr,value){const td=document.createElement('td');td.textContent=str(value);tr.appendChild(td)}
-function row(tbody,values){const tr=document.createElement('tr');values.forEach(v=>cell(tr,v));tbody.appendChild(tr)}
-function testRecord(r){return /тест|проверка/i.test([r.lastName,r.firstName,r.school,r.last_name,r.first_name,r.school].join(' '))}
-function visibleRanking(){const q=$('search').value.trim().toLocaleLowerCase('ru');return ranking.filter(r=>(!$('hideTests').checked||!testRecord(r))&&[r.lastName,r.firstName,r.school].join(' ').toLocaleLowerCase('ru').includes(q))}
-function visibleAttempts(){const keys=new Set(visibleRanking().map(r=>r.participantKey));return attempts.filter(a=>keys.has(a.participant_key))}
-function render(){const rr=visibleRanking(),aa=visibleAttempts();$('participantsCount').textContent=rr.length;$('attemptsCount').textContent=aa.length;$('rankingRows').replaceChildren();$('attemptRows').replaceChildren();rr.forEach(r=>row($('rankingRows'),[r.place,r.lastName,r.firstName,r.school,r.classNumber,r.attempts,`${r.bestScore}/35`]));aa.forEach(a=>row($('attemptRows'),[new Date(a.created_at).toLocaleString('ru-RU'),a.last_name,a.first_name,a.school,a.class_number,a.attempt_number,`${a.score}/${a.total}`]));}
-function csvDownload(filename,headers,records){const safe=v=>{let s=str(v);if(/^[\s]*[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replaceAll('"','""')+'"'};const content='\ufeff'+[headers,...records].map(line=>line.map(safe).join(';')).join('\r\n');const blob=new Blob([content],{type:'text/csv;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-async function load(){status('dashboardStatus','Загружаем результаты…');$('reload').disabled=true;try{const res=await fetch(`${BASE}/functions/v1/pulse-admin-api`,{method:'GET',headers:{Authorization:`Bearer ${accessToken}`,apikey:KEY},cache:'no-store'});const data=await res.json();if(!res.ok)throw new Error(data.error||`Ошибка ${res.status}`);if(!Array.isArray(data.ranking)||!Array.isArray(data.attempts))throw new Error('Неожиданный ответ сервера');ranking=data.ranking;attempts=data.attempts;render();status('dashboardStatus',`Данные обновлены: ${new Date().toLocaleString('ru-RU')}`)}catch(e){status('dashboardStatus',e.message||'Ошибка загрузки',true)}finally{$('reload').disabled=false}}
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginButton').disabled=true;status('loginStatus','Проверяем учётную запись…');try{const res=await fetch(`${BASE}/auth/v1/token?grant_type=password`,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({email:$('email').value.trim(),password:$('password').value})});const data=await res.json();if(!res.ok||!data.access_token)throw new Error('Не удалось войти. Проверь электронную почту и пароль.');accessToken=data.access_token;$('password').value='';$('loginPanel').classList.add('hidden');$('dashboard').classList.remove('hidden');$('logout').classList.remove('hidden');await load()}catch(err){status('loginStatus',err.message||'Ошибка входа',true)}finally{$('loginButton').disabled=false}});
-$('logout').addEventListener('click',()=>{accessToken=null;ranking=[];attempts=[];$('dashboard').classList.add('hidden');$('logout').classList.add('hidden');$('loginPanel').classList.remove('hidden');$('rankingRows').replaceChildren();$('attemptRows').replaceChildren();status('loginStatus','Вы вышли из панели.')});
-$('reload').addEventListener('click',load);$('search').addEventListener('input',render);$('hideTests').addEventListener('change',render);
-$('exportRanking').addEventListener('click',()=>csvDownload('pulse-rating.csv',['Место','Фамилия','Имя','Школа','Класс','Попыток','Лучший балл'],visibleRanking().map(r=>[r.place,r.lastName,r.firstName,r.school,r.classNumber,r.attempts,r.bestScore])));
-$('exportAttempts').addEventListener('click',()=>csvDownload('pulse-attempts.csv',['Дата','Фамилия','Имя','Школа','Класс','Номер попытки','Баллы','Всего'],visibleAttempts().map(a=>[a.created_at,a.last_name,a.first_name,a.school,a.class_number,a.attempt_number,a.score,a.total])));
+
+function status(id,message,isError=false){
+  const el=$(id);
+  el.textContent=message;
+  el.classList.toggle('error',isError);
+}
+
+function cell(tr,value){
+  const td=document.createElement('td');
+  td.textContent=str(value);
+  tr.appendChild(td);
+}
+
+function row(tbody,values){
+  const tr=document.createElement('tr');
+  values.forEach(v=>cell(tr,v));
+  tbody.appendChild(tr);
+}
+
+// Определяем тестовые записи по специальному полю из базы.
+function testRecord(r){
+  return r.isTest === true || r.is_test === true;
+}
+
+function visibleRanking(){
+  const q=$('search').value.trim().toLocaleLowerCase('ru');
+  return ranking.filter(r=>
+    (!$('hideTests').checked || !testRecord(r)) &&
+    [r.lastName,r.firstName,r.school].join(' ')
+      .toLocaleLowerCase('ru').includes(q)
+  );
+}
+
+function visibleAttempts(){
+  const keys=new Set(visibleRanking().map(r=>r.participantKey));
+  return attempts.filter(a=>keys.has(a.participant_key));
+}
+
+function render(){
+  const rr=visibleRanking(),aa=visibleAttempts();
+  $('participantsCount').textContent=rr.length;
+  $('attemptsCount').textContent=aa.length;
+  $('rankingRows').replaceChildren();
+  $('attemptRows').replaceChildren();
+
+  rr.forEach(r=>row($('rankingRows'),[
+    r.place,r.lastName,r.firstName,r.school,
+    r.classNumber,r.attempts,`${r.bestScore}/35`
+  ]));
+
+  aa.forEach(a=>row($('attemptRows'),[
+    new Date(a.created_at).toLocaleString('ru-RU'),
+    a.last_name,a.first_name,a.school,
+    a.class_number,a.attempt_number,`${a.score}/${a.total}`
+  ]));
+}
+
+function csvDownload(filename,headers,records){
+  const safe=v=>{
+    let s=str(v);
+    if(/^[\s]*[=+@\-\t\r]/.test(s))s="'"+s;
+    return '"'+s.replaceAll('"','""')+'"';
+  };
+  const content='\ufeff'+[headers,...records]
+    .map(line=>line.map(safe).join(';')).join('\r\n');
+  const blob=new Blob([content],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+async function load(){
+  status('dashboardStatus','Загружаем результаты…');
+  $('reload').disabled=true;
+  try{
+    const res=await fetch(`${BASE}/functions/v1/pulse-admin-api`,{
+      method:'GET',
+      headers:{Authorization:`Bearer ${accessToken}`,apikey:KEY},
+      cache:'no-store'
+    });
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||`Ошибка ${res.status}`);
+    if(!Array.isArray(data.ranking)||!Array.isArray(data.attempts))
+      throw new Error('Неожиданный ответ сервера');
+    ranking=data.ranking;
+    attempts=data.attempts;
+    render();
+    status('dashboardStatus',`Данные обновлены: ${new Date().toLocaleString('ru-RU')}`);
+  }catch(e){
+    status('dashboardStatus',e.message||'Ошибка загрузки',true);
+  }finally{
+    $('reload').disabled=false;
+  }
+}
+
+$('loginForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  $('loginButton').disabled=true;
+  status('loginStatus','Проверяем учётную запись…');
+  try{
+    const res=await fetch(`${BASE}/auth/v1/token?grant_type=password`,{
+      method:'POST',
+      headers:{apikey:KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({
+        email:$('email').value.trim(),
+        password:$('password').value
+      })
+    });
+    const data=await res.json();
+    if(!res.ok||!data.access_token)
+      throw new Error('Не удалось войти. Проверь электронную почту и пароль.');
+    accessToken=data.access_token;
+    $('password').value='';
+    $('loginPanel').classList.add('hidden');
+    $('dashboard').classList.remove('hidden');
+    $('logout').classList.remove('hidden');
+    await load();
+  }catch(err){
+    status('loginStatus',err.message||'Ошибка входа',true);
+  }finally{
+    $('loginButton').disabled=false;
+  }
+});
+
+$('logout').addEventListener('click',()=>{
+  accessToken=null;
+  ranking=[];
+  attempts=[];
+  $('dashboard').classList.add('hidden');
+  $('logout').classList.add('hidden');
+  $('loginPanel').classList.remove('hidden');
+  $('rankingRows').replaceChildren();
+  $('attemptRows').replaceChildren();
+  status('loginStatus','Вы вышли из панели.');
+});
+
+$('reload').addEventListener('click',load);
+$('search').addEventListener('input',render);
+$('hideTests').addEventListener('change',render);
+
+$('exportRanking').addEventListener('click',()=>csvDownload(
+  'pulse-rating.csv',
+  ['Место','Фамилия','Имя','Школа','Класс','Попыток','Лучший балл'],
+  visibleRanking().map(r=>[
+    r.place,r.lastName,r.firstName,r.school,
+    r.classNumber,r.attempts,r.bestScore
+  ])
+));
+
+$('exportAttempts').addEventListener('click',()=>csvDownload(
+  'pulse-attempts.csv',
+  ['Дата','Фамилия','Имя','Школа','Класс','Номер попытки','Баллы','Всего'],
+  visibleAttempts().map(a=>[
+    a.created_at,a.last_name,a.first_name,a.school,
+    a.class_number,a.attempt_number,a.score,a.total
+  ])
+));
 </script>
 </body>
 </html>
