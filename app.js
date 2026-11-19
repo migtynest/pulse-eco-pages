@@ -68,7 +68,7 @@ function home() {
       <button type="submit" class="btn btn-primary wide">Начать олимпиаду →</button>
     </form></section>`;
 }
-function begin() {
+async function begin() {
   if(state.busy) return;
   const person={
     lastName:$('#lastName').value.trim().replace(/\s+/g,' '),
@@ -78,10 +78,29 @@ function begin() {
   };
   if([person.lastName,person.firstName,person.school].some(s=>s.length<2) ||
      ![8,9,10,11].includes(person.classNumber)) return toast('Проверь данные участника');
-  const order=shuffle(state.questions.map(q=>q.id));
-  const optionOrder=Object.fromEntries(state.questions.map(q=>[q.id,shuffle(q.options.map(o=>o.id))]));
-  state.attempt={attemptId:crypto.randomUUID(),person,order,optionOrder,answers:{},current:0};
-  state.result=null;save();render();window.scrollTo(0,0);
+  state.busy=true;
+  const startButton=$('#registration button[type="submit"]');
+  if(startButton){startButton.disabled=true;startButton.textContent='Проверяем попытки…';}
+  try {
+    const status=await api('POST',{action:'attempt-status',...person});
+    if(status.allowed!==true || !Number.isInteger(status.remaining) || status.remaining<=0) {
+      $('#app').innerHTML=`<div class="quiz-wrap"><section class="result-hero">
+        <div class="eyebrow">Pulse · Экоолимпиада</div>
+        <h1>Все три попытки использованы</h1>
+        <p>Для этих данных участника лимит прохождений исчерпан. Новая попытка недоступна.</p>
+        <button class="btn btn-primary" data-action="new-attempt">Вернуться на главную</button>
+        </section></div>`;
+      return;
+    }
+    const order=shuffle(state.questions.map(q=>q.id));
+    const optionOrder=Object.fromEntries(state.questions.map(q=>[q.id,shuffle(q.options.map(o=>o.id))]));
+    state.attempt={attemptId:crypto.randomUUID(),person,order,optionOrder,answers:{},current:0};
+    state.result=null;save();render();window.scrollTo(0,0);
+  } catch(err) { toast('Не удалось проверить попытки: '+err.message); }
+  finally {
+    state.busy=false;
+    if(startButton?.isConnected){startButton.disabled=false;startButton.textContent='Начать олимпиаду →';}
+  }
 }
 function quiz() {
   const a=state.attempt;
@@ -128,7 +147,7 @@ async function next() {
   } catch(err) { toast(err.message); }
   finally {state.busy=false;}
 }
-document.addEventListener('submit',ev=>{if(ev.target.id==='registration'){ev.preventDefault();begin();}});
+document.addEventListener('submit',ev=>{if(ev.target.id==='registration'){ev.preventDefault();void begin();}});
 document.addEventListener('change',ev=>{
   if(ev.target.name!=='quiz-answer'||!state.attempt)return;
   const a=state.attempt; a.answers[a.order[a.current]]=ev.target.value;save();render();
